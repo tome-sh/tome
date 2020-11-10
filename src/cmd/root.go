@@ -13,6 +13,7 @@ var cfgFile string
 
 var historyFilePathConfigKey = "historyFile"
 var shellTypeConfigkey = "shellType"
+var repositoryConfigKey = "repository"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -69,6 +70,7 @@ func initConfig() {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 		requireParam(historyFilePathConfigKey)
 		requireParam(shellTypeConfigkey)
+		requireParam(repositoryConfigKey)
 	}
 }
 
