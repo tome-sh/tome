@@ -7,25 +7,26 @@ import (
 
 var defaultBatchSizeKb int64 = 512 * 1000
 
-// Parser interface
-
+// Parser is the generic interface to parse shell histories.
 type Parser interface {
 	Parse() string
 }
 
-// Zsh parser
-
+// ZshParser is the zsh implementation of parser interface.
 type ZshParser struct {
 	path string
 	batchSize int64
 }
 
+// Parse the second to last line (this will be effectively the last command, as
+//`tome last` will be put into the history before we read it)
 func (p ZshParser) Parse() string {
 	line := readSecondToLastLine(p.path, p.batchSize)
 	splits := strings.Split(line, ";")
 	return splits[len(splits) - 1]
 }
 
+// NewZshParser creates a zsh parser.
 func NewZshParser(p string) Parser {
 	return ZshParser{path: p, batchSize: defaultBatchSizeKb}
 }
@@ -34,8 +35,6 @@ func NewZshParser(p string) Parser {
 func NewZshParserWithBatchSize(p string, batchSize int64) Parser {
 	return ZshParser{path: p, batchSize: batchSize}
 }
-
-// Helpers
 
 func readSecondToLastLine(filePath string, batchSize int64) string {
 	file, err := os.Open(filePath)
