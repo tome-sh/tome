@@ -1,0 +1,10 @@
+: 1605017656:0;gd
+: 1605017681:0;ga go.mod go.sum .github/
+: 1605017681:0;gs
+: 1605017684:0;fg
+: 1605017735:0;rm parser_test.go
+: 1605017736:0;gs
+: 1605017767:0;md src/test_resources
+: 1605017805:0;tail ~/.zsh_history >> src/test_resources/parser/simple_history
+: 1605017813:0;md src/test_resources/parser
+: 1605017814:0;tail ~/.zsh_history >> src/test_resources/parser/simple_history

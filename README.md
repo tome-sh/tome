@@ -4,6 +4,11 @@ Share shell spells.
 
 ## Development
 
+Run tests:
+```
+go test -v ./...
+```
+
 Note: To run, you will need to provide a config file (default: `~/.tome.<EXTENSION>`).
 For supported EXTENSIONs see the ![viper doc](https://github.com/spf13/viper#what-is-viper).
 
