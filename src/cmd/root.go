@@ -10,6 +10,7 @@ import (
 )
 
 var cfgFile string
+var debug bool
 
 var historyFilePathConfigKey = "historyFile"
 var shellTypeConfigkey = "shellType"
@@ -43,6 +44,8 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tome{.yaml|.json})")
+	rootCmd.PersistentFlags().BoolP("debug", "d", false, "set to true to see stack traces")
+	viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("debug"))
 }
 
 // initConfig reads in config file and ENV variables if set.

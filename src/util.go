@@ -1,10 +1,20 @@
 package tome
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"github.com/spf13/viper"
+)
 
 // Check if error is not nil and panic in case it is.
 func Check(e error) {
 	if e != nil {
-		panic(fmt.Sprintf("Encountered fatal error: %v\n", e))
+		if (viper.GetBool("debug")) {
+			panic(e)
+		} else {
+			fmt.Printf("Encountered error: %v\n", e)
+		}
+		os.Exit(1)
 	}
 }
