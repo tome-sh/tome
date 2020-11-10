@@ -9,8 +9,6 @@ import (
 	"tome/src"
 )
 
-var historyFilePathConfigKey = "zshHistoryFile"
-
 // lastCmd represents the last command
 var lastCmd = &cobra.Command{
 	Use:   "last",

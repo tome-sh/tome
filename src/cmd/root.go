@@ -11,6 +11,9 @@ import (
 
 var cfgFile string
 
+var historyFilePathConfigKey = "historyFile"
+var shellTypeConfigkey = "shellType"
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "tome",
@@ -68,5 +71,13 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		requireParam(historyFilePathConfigKey)
+		requireParam(shellTypeConfigkey)
+	}
+}
+
+func requireParam(configKey string) {
+	if !viper.IsSet(configKey) {
+		panic(fmt.Sprintf("Missing required config parameter: %s.", configKey))
 	}
 }
