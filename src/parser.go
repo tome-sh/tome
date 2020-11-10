@@ -11,8 +11,8 @@ var defaultBatchSizeKb int64 = 512 * 1000
 
 // Parser is the generic interface to parse shell histories.
 type Parser interface {
-	Parse() Command
-	ParseWithTags(tags []string) Command
+	Parse(author string) Command
+	ParseWithTags(author string, tags []string) Command
 }
 
 // Command is a tome command.
@@ -37,18 +37,16 @@ type ZshParser struct {
 
 // Parse the second to last line (this will be effectively the last command, as
 //`tome last` will be put into the history before we read it)
-func (p ZshParser) Parse() Command {
-	return p.ParseWithTags([]string{})
+func (p ZshParser) Parse(author string) Command {
+	return p.ParseWithTags(author, []string{})
 }
 
 // ParseWithTags parses the second to last line (this will be effectively
 // the last command, as `tome last` will be put into the history before we
 // read it) and attaches `tags`.
-func (p ZshParser) ParseWithTags(tags []string) Command {
-	name, err := getGitConfigSetting("user.name")
-	Check(err)
+func (p ZshParser) ParseWithTags(author string, tags []string) Command {
 	return Command{
-		author: name,
+		author: author,
 		timestamp: time.Now().Unix(),
 		tags: tags,
 		command: p.getCmd(),

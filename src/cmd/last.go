@@ -16,13 +16,16 @@ var lastCmd = &cobra.Command{
 	Use:   "last",
 	Short: "Put last command from history into tome.",
 	Run: func(cmd *cobra.Command, args []string) {
-		parser := tome.NewZshParser(viper.GetString(historyFilePathConfigKey))
-		command := parser.ParseWithTags(tags)
-
-		repo := tome.NewFileRepository(viper.GetString(repositoryConfigKey))
-		_, err := repo.Store(command)
+		parser := tome.NewZshParser(viper.GetString(tome.HISTORY_FILE_PATH_CONFIG_KEY))
+		name, err := tome.GetGitConfigSetting("user.name")
 		tome.Check(err)
-		fmt.Printf("Stored command: %s\n", command)
+		command := parser.ParseWithTags(name, tags)
+
+		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
+		_, err = repo.Store(command)
+		tome.Check(err)
+
+		fmt.Printf("Stored command: %s\n", command.String())
 	},
 }
 
