@@ -78,12 +78,8 @@ func readSecondToLastLine(filePath string, batchSize int64) string {
 	Check(err)
 
 	size := stat.Size()
-	buf := make([]byte, batchSize)
-	start := size - batchSize
-	if (size < batchSize) {
-		buf = make([]byte, size)
-		start = 0
-	}
+	buf := make([]byte, Min(batchSize, size))
+	start := Max(size - batchSize, 0)
 
 	_, err = file.ReadAt(buf, start)
 	Check(err)
