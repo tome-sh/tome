@@ -9,13 +9,16 @@ import (
 	"tome/src"
 )
 
+var tags []string
+
 // lastCmd represents the last command
 var lastCmd = &cobra.Command{
 	Use:   "last",
 	Short: "Put last command from history into tome.",
 	Run: func(cmd *cobra.Command, args []string) {
 		parser := tome.NewZshParser(viper.GetString(historyFilePathConfigKey))
-		command := parser.Parse()
+		command := parser.ParseWithTags(tags)
+
 		repo := tome.NewFileRepository(viper.GetString(repositoryConfigKey))
 		_, err := repo.Store(command)
 		tome.Check(err)
@@ -24,6 +27,7 @@ var lastCmd = &cobra.Command{
 }
 
 func init() {
+	lastCmd.PersistentFlags().StringSliceVarP(&tags, "tags", "t", tags, "tags for this command")
 	rootCmd.AddCommand(lastCmd)
 }
 

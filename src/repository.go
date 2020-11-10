@@ -7,7 +7,7 @@ import (
 
 // Repository has the methods to store shell commands.
 type Repository interface {
-	Store(cmd string) (bool, error)
+	Store(cmd Command) (bool, error)
 }
 
 // FileRepository is a basic kind of repository that simply writes to a file.
@@ -21,7 +21,7 @@ func NewFileRepository(p string) Repository {
 }
 
 // Store the given cmd in the Repository.
-func (r FileRepository) Store(cmd string) (bool, error) {
+func (r FileRepository) Store(cmd Command) (bool, error) {
 	f, err := os.OpenFile(r.path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return false, err

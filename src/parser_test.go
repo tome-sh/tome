@@ -12,7 +12,7 @@ func TestZshParser(t *testing.T) {
 	stat, _ := os.Stat(simpleFile)
 	table := []struct {
 		parser Parser
-		expected string
+		expectedCommand string
 	} {
 		{NewZshParser(simpleFile), "md src/test_resources/parser"},
 		{NewZshParserWithBatchSize(simpleFile, int64(stat.Size() / 2)), "md src/test_resources/parser"},
@@ -22,8 +22,8 @@ func TestZshParser(t *testing.T) {
 		testname := fmt.Sprintf("Testing fixture: %s", tt.parser)
 		t.Run(testname, func(t *testing.T) {
 			ans := tt.parser.Parse()
-			if ans != tt.expected {
-				t.Errorf("got %s, wanted %s", ans, tt.expected)
+			if ans.command != tt.expectedCommand {
+				t.Errorf("got %s, wanted %s", ans, tt.expectedCommand)
 			}
 		})
 	}
