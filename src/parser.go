@@ -33,25 +33,18 @@ func NewZshParser(p string) Parser {
 
 func readSecondToLastLine(filePath string) string {
 	file, err := os.Open(filePath)
-	check(err)
+	Check(err)
 	defer file.Close()
 
 	buf := make([]byte, batchSizeKb)
 	stat, err := os.Stat(filePath)
-	check(err)
+	Check(err)
 	start := stat.Size() - batchSizeKb
 	_, err = file.ReadAt(buf, start)
-	check(err)
+	Check(err)
 
 	splits := strings.Split(string(buf), "\n")
 
 	lastTwoLines := splits[len(splits) - 3 :]
 	return lastTwoLines[0]
 }
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
