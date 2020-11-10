@@ -1,12 +1,14 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	homedir "github.com/mitchellh/go-homedir"
+
+	tome "tome/src"
 )
 
 var cfgFile string
@@ -30,10 +32,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+		tome.Check(rootCmd.Execute())
 }
 
 func init() {
@@ -56,10 +55,7 @@ func initConfig() {
 	} else {
 		// Find home directory.
 		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+		tome.Check(err)
 
 		// Search config in home directory with name ".tome" (without extension).
 		viper.AddConfigPath(home)
@@ -79,6 +75,6 @@ func initConfig() {
 
 func requireParam(configKey string) {
 	if !viper.IsSet(configKey) {
-		panic(fmt.Sprintf("Missing required config parameter: %s.", configKey))
+		tome.Check(errors.New(fmt.Sprintf("Missing required config parameter: %s.", configKey)))
 	}
 }
