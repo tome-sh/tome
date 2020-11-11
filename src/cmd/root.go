@@ -1,15 +1,18 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
-	"github.com/spf13/cobra"
-	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	homedir "github.com/mitchellh/go-homedir"
+
+	tome "tome/src"
 )
 
 var cfgFile string
+var debug bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -25,10 +28,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+		tome.Check(rootCmd.Execute())
 }
 
 func init() {
@@ -38,11 +38,9 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tome.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tome{.yaml|.json})")
+	rootCmd.PersistentFlags().BoolP("debug", "d", false, "set to true to see stack traces")
+	viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("debug"))
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -53,10 +51,7 @@ func initConfig() {
 	} else {
 		// Find home directory.
 		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+		tome.Check(err)
 
 		// Search config in home directory with name ".tome" (without extension).
 		viper.AddConfigPath(home)
@@ -68,5 +63,14 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		requireParam(tome.HISTORY_FILE_PATH_CONFIG_KEY)
+		requireParam(tome.SHELL_TYPE_CONFIG_KEY)
+		requireParam(tome.REPOSITORY_CONFIG_KEY)
+	}
+}
+
+func requireParam(configKey string) {
+	if !viper.IsSet(configKey) {
+		tome.Check(errors.New(fmt.Sprintf("Missing required config parameter: %s.", configKey)))
 	}
 }

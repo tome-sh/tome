@@ -1,6 +1,8 @@
 package main
 
-import "tome/cmd"
+import (
+	"tome/src/cmd"
+)
 
 func main() {
 	cmd.Execute()
