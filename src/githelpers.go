@@ -53,6 +53,20 @@ func Sync() error {
 	return repo.Push(&git.PushOptions{})
 }
 
+func Pull() error {
+	repo, err := git.PlainOpen(getDir())
+	if (err != nil) {
+		return err
+	}
+
+	worktree, err := getWorkTree(repo)
+	if (err != nil) {
+		return err
+	}
+
+	return worktree.Pull(&git.PullOptions{})
+}
+
 func GetGitConfigSetting(key string) (string, error) {
 	app := "git"
 

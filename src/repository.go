@@ -1,6 +1,7 @@
 package tome
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
@@ -8,6 +9,7 @@ import (
 // Repository has the methods to store shell commands.
 type Repository interface {
 	Store(cmd Command) (bool, error)
+	GetAll() ([]string, error)
 }
 
 // FileRepository is a basic kind of repository that simply writes to a file.
@@ -45,6 +47,22 @@ func (r FileRepository) Store(cmd Command) (bool, error) {
 	return true, nil
 }
 
+// Get all commands from the repository.
+func (r FileRepository) GetAll() ([]string, error) {
+	f, err := os.Open(r.path)
+	if err != nil {
+		return []string{}, err
+	}
+	defer f.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, scanner.Err()
+}
+
 // Store the given cmd in the GitRepository.
 func (r GitRepository) Store(cmd Command) (bool, error) {
 	_, err := r.fileRepository.Store(cmd)
@@ -57,4 +75,9 @@ func (r GitRepository) Store(cmd Command) (bool, error) {
 	} else {
 		return true, nil
 	}
+}
+
+// Get all commands from the repository.
+func (r GitRepository) GetAll() ([]string, error) {
+	return r.fileRepository.GetAll()
 }
