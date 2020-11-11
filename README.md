@@ -19,7 +19,7 @@ go test -v ./...
 ```
 
 Note: To run, you will need to provide a config file (default: `~/.tome.<EXTENSION>`).
-For supported EXTENSIONs see the ![viper doc](https://github.com/spf13/viper#what-is-viper).
+For supported EXTENSIONs see the [viper doc](https://github.com/spf13/viper#what-is-viper).
 
 To run the code showing the help text:
 ```
