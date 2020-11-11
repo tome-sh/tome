@@ -26,7 +26,7 @@ type Command struct {
 //String() is the string representation of a command.
 func (c Command) String() string {
 	t := strings.Join(c.tags, ":")
-	return fmt.Sprintf("%s;%d;%s;%s", c.author, c.timestamp, t, c.command)
+	return fmt.Sprintf("%d;%s;%s;%s", c.timestamp, c.author, t, c.command)
 }
 
 // ZshParser is the zsh implementation of parser interface.
