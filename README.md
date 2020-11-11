@@ -2,6 +2,15 @@
 
 Share shell spells.
 
+## Config
+
+You'll need a config at ~/.tome.yaml looking like this:
+```
+shellType: zsh
+historyFile: /Users/username/.zsh_history
+repository: /Users/username/code/tome-repo/commands
+```
+
 ## Development
 
 Run tests:
