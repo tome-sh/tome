@@ -35,10 +35,10 @@ jobs:
     - name: Build
       run: go build -v .
 
-    - name: Lint
-      run: |
-        test -z $(gofmt -l .)
-        golint ./...
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v2
+      with:
+        version: v1.32
 
     - name: Test
       run: go test -v ./...
