@@ -23,7 +23,7 @@ func TestZshParser(t *testing.T) {
 		t.Run(testname, func(t *testing.T) {
 			ans := tt.parser.Parse("nobody")
 			if ans.command != tt.expectedCommand {
-				t.Errorf("got %s, wanted %s", ans, tt.expectedCommand)
+				t.Errorf("got %s, wanted %s", ans.command, tt.expectedCommand)
 			}
 		})
 	}
