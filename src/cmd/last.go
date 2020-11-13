@@ -22,7 +22,7 @@ var lastCmd = &cobra.Command{
 		command := parser.ParseWithTags(name, tags)
 
 		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
-		_, err = repo.Store(command)
+		err = repo.Store(command)
 		tome.Check(err)
 
 		fmt.Printf("Stored command: %s\n", command.String())
