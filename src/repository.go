@@ -66,7 +66,7 @@ func (r FileRepository) GetAll() ([]string, error) {
 // Store the given cmd in the GitRepository.
 func (r GitRepository) Store(cmd Command) (bool, error) {
 	_, err := r.fileRepository.Store(cmd)
-	if (err != nil) {
+	if err != nil {
 		return false, err
 	}
 

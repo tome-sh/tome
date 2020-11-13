@@ -9,7 +9,7 @@ import (
 
 // Min calculates the minimum of two ints.
 func Min(left int64, right int64) int64 {
-	if (left < right) {
+	if left < right {
 		return left
 	} else {
 		return right
@@ -18,7 +18,7 @@ func Min(left int64, right int64) int64 {
 
 // Max calculates the maximum of two ints.
 func Max(left int64, right int64) int64 {
-	if (left > right) {
+	if left > right {
 		return left
 	} else {
 		return right
@@ -28,7 +28,7 @@ func Max(left int64, right int64) int64 {
 // Check if error is not nil and panic in case it is.
 func Check(e error) {
 	if e != nil {
-		if (viper.GetBool("debug")) {
+		if viper.GetBool("debug") {
 			panic(e)
 		} else {
 			fmt.Printf("Encountered error: %v\n", e)

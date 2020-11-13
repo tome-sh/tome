@@ -17,10 +17,10 @@ type Parser interface {
 
 // Command is a tome command.
 type Command struct {
-	author string
-	tags []string
+	author    string
+	tags      []string
 	timestamp int64
-	command string
+	command   string
 }
 
 //String() is the string representation of a command.
@@ -31,7 +31,7 @@ func (c Command) String() string {
 
 // ZshParser is the zsh implementation of parser interface.
 type ZshParser struct {
-	path string
+	path      string
 	batchSize int64
 }
 
@@ -46,17 +46,17 @@ func (p ZshParser) Parse(author string) Command {
 // read it) and attaches `tags`.
 func (p ZshParser) ParseWithTags(author string, tags []string) Command {
 	return Command{
-		author: author,
+		author:    author,
 		timestamp: time.Now().Unix(),
-		tags: tags,
-		command: p.getCmd(),
+		tags:      tags,
+		command:   p.getCmd(),
 	}
 }
 
 func (p ZshParser) getCmd() string {
 	line := readSecondToLastLine(p.path, p.batchSize)
 	splits := strings.Split(line, ";")
-	return splits[len(splits) - 1]
+	return splits[len(splits)-1]
 }
 
 // NewZshParser creates a zsh parser.
@@ -79,13 +79,13 @@ func readSecondToLastLine(filePath string, batchSize int64) string {
 
 	size := stat.Size()
 	buf := make([]byte, Min(batchSize, size))
-	start := Max(size - batchSize, 0)
+	start := Max(size-batchSize, 0)
 
 	_, err = file.ReadAt(buf, start)
 	Check(err)
 
 	splits := strings.Split(string(buf), "\n")
 
-	lastTwoLines := splits[len(splits) - 3 :]
+	lastTwoLines := splits[len(splits)-3:]
 	return lastTwoLines[0]
 }

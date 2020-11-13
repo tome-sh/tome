@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	homedir "github.com/mitchellh/go-homedir"
 
 	tome "tome/src"
 )
@@ -28,7 +28,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-		tome.Check(rootCmd.Execute())
+	tome.Check(rootCmd.Execute())
 }
 
 func init() {

@@ -11,11 +11,11 @@ func TestZshParser(t *testing.T) {
 	simpleFile, _ := filepath.Abs("./test_resources/parser/simple_history")
 	stat, _ := os.Stat(simpleFile)
 	table := []struct {
-		parser Parser
+		parser          Parser
 		expectedCommand string
-	} {
+	}{
 		{NewZshParser(simpleFile), "md src/test_resources/parser"},
-		{NewZshParserWithBatchSize(simpleFile, int64(stat.Size() / 2)), "md src/test_resources/parser"},
+		{NewZshParserWithBatchSize(simpleFile, int64(stat.Size()/2)), "md src/test_resources/parser"},
 	}
 
 	for _, tt := range table {

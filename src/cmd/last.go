@@ -33,4 +33,3 @@ func init() {
 	lastCmd.PersistentFlags().StringSliceVarP(&tags, "tags", "t", tags, "tags for this command")
 	rootCmd.AddCommand(lastCmd)
 }
-
