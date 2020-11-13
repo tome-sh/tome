@@ -13,40 +13,40 @@ import (
 
 func Sync() error {
 	repo, err := git.PlainOpen(getDir())
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
 	worktree, err := getWorkTree(repo)
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
 	err = worktree.Pull(&git.PullOptions{})
-	if (err != nil && err.Error() != "already up-to-date") {
+	if err != nil && err.Error() != "already up-to-date" {
 		return err
 	}
 
 	file := getFile()
 	_, err = worktree.Add(file)
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
 	userName, err := GetGitConfigSetting("user.name")
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
 	email, err := GetGitConfigSetting("user.email")
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
 	auth := object.Signature{Name: userName, Email: email, When: time.Now()}
 	opts := git.CommitOptions{All: false, Author: &auth, Parents: []plumbing.Hash{}}
 	_, err = worktree.Commit("Add command", &opts)
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
@@ -55,12 +55,12 @@ func Sync() error {
 
 func Pull() error {
 	repo, err := git.PlainOpen(getDir())
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
 	worktree, err := getWorkTree(repo)
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
@@ -86,15 +86,15 @@ func GetGitConfigSetting(key string) (string, error) {
 func getFile() string {
 	path := viper.GetString("repository")
 	splits := strings.Split(path, "/")
-	return splits[len(splits) - 1]
+	return splits[len(splits)-1]
 }
 
 func getDir() string {
 	path := viper.GetString("repository")
 	splits := strings.Split(path, "/")
-	return strings.Join(splits[:len(splits) - 1], "/")
+	return strings.Join(splits[:len(splits)-1], "/")
 }
 
-func getWorkTree(repo *git.Repository) (*git.Worktree, error){
+func getWorkTree(repo *git.Repository) (*git.Worktree, error) {
 	return repo.Worktree()
 }

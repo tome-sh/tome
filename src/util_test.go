@@ -8,10 +8,10 @@ import (
 
 func TestMin(t *testing.T) {
 	table := []struct {
-		left int64
-		right int64
+		left     int64
+		right    int64
 		expected int64
-	} {
+	}{
 		{0, 1, 0},
 		{-1, 1, -1},
 		{math.MaxInt64, math.MinInt64, math.MinInt64},
@@ -30,10 +30,10 @@ func TestMin(t *testing.T) {
 
 func TestMax(t *testing.T) {
 	table := []struct {
-		left int64
-		right int64
+		left     int64
+		right    int64
 		expected int64
-	} {
+	}{
 		{0, 1, 1},
 		{-1, 1, 1},
 		{math.MaxInt64, math.MinInt64, math.MaxInt64},
