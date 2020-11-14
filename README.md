@@ -25,8 +25,3 @@ To run the code showing the help text:
 ```
 go run .
 ```
-
-To run `last` command:
-```
-go run . last
-```
