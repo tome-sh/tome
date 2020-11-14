@@ -69,6 +69,6 @@ func initConfig() {
 
 func requireParam(configKey string) {
 	if !viper.IsSet(configKey) {
-		tome.Check(fmt.Errorf("Missing required config parameter: %s.", configKey))
+		tome.Check(fmt.Errorf("missing required config parameter: %s", configKey))
 	}
 }
