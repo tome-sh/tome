@@ -36,3 +36,11 @@ func Check(e error) {
 		os.Exit(1)
 	}
 }
+
+func GetUserName() (string, error) {
+	userName, err := GetGitConfigSetting("user.name")
+	if err != nil {
+		return "", err
+	}
+	return userName, nil
+}
