@@ -24,3 +24,8 @@ To run the code showing the help text:
 ```
 go run .
 ```
+
+To run `write` command:
+```
+go run . write 'echo "This is the command"'
+```
