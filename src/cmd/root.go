@@ -63,7 +63,6 @@ func initConfig() {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
 
-	requireParam(tome.HISTORY_FILE_PATH_CONFIG_KEY)
 	requireParam(tome.SHELL_TYPE_CONFIG_KEY)
 	requireParam(tome.REPOSITORY_CONFIG_KEY)
 }
