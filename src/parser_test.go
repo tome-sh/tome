@@ -22,8 +22,8 @@ func TestZshParser(t *testing.T) {
 		testname := fmt.Sprintf("Testing fixture: %s", tt.parser)
 		t.Run(testname, func(t *testing.T) {
 			ans := tt.parser.Parse("nobody")
-			if ans.command != tt.expectedCommand {
-				t.Errorf("got %s, wanted %s", ans.command, tt.expectedCommand)
+			if ans.Command != tt.expectedCommand {
+				t.Errorf("got %s, wanted %s", ans.Command, tt.expectedCommand)
 			}
 		})
 	}

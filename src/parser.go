@@ -1,7 +1,6 @@
 package tome
 
 import (
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -15,42 +14,28 @@ type Parser interface {
 	ParseWithTags(author string, tags []string) Command
 }
 
-// Command is a tome command.
-type Command struct {
-	author    string
-	tags      []string
-	timestamp int64
-	command   string
-}
-
-//String() is the string representation of a command.
-func (c Command) String() string {
-	t := strings.Join(c.tags, ":")
-	return fmt.Sprintf("%d;%s;%s;%s", c.timestamp, c.author, t, c.command)
-}
-
 // ZshParser is the zsh implementation of parser interface.
 type ZshParser struct {
 	path      string
 	batchSize int64
 }
 
-// Parse the second to last line (this will be effectively the last command, as
+// parse the second to last line (this will be effectively the last command, as
 //`tome last` will be put into the history before we read it)
 func (p ZshParser) Parse(author string) Command {
 	return p.ParseWithTags(author, []string{})
 }
 
-// ParseWithTags parses the second to last line (this will be effectively
+// parsewithtags parses the second to last line (this will be effectively
 // the last command, as `tome last` will be put into the history before we
 // read it) and attaches `tags`.
 func (p ZshParser) ParseWithTags(author string, tags []string) Command {
-	return Command{
-		author:    author,
-		timestamp: time.Now().Unix(),
-		tags:      tags,
-		command:   p.getCmd(),
-	}
+	return NewCommand(
+		author,
+		p.getCmd(),
+		time.Now().Unix(),
+		tags,
+	)
 }
 
 func (p ZshParser) getCmd() string {
