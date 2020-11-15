@@ -16,7 +16,7 @@ var showCmd = &cobra.Command{
 	Short: "Show all commands from tome.",
 	Run: func(cmd *cobra.Command, args []string) {
 		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
-		err := tome.Pull()
+		err := repo.Pull()
 		if err != nil && err.Error() != "already up-to-date" {
 			tome.Check(err)
 		}
