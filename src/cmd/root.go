@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -12,7 +11,6 @@ import (
 )
 
 var cfgFile string
-var debug bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -40,7 +38,7 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tome{.yaml|.json})")
 	rootCmd.PersistentFlags().BoolP("debug", "d", false, "set to true to see stack traces")
-	viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("debug"))
+	tome.Check(viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("debug")))
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -71,6 +69,6 @@ func initConfig() {
 
 func requireParam(configKey string) {
 	if !viper.IsSet(configKey) {
-		tome.Check(errors.New(fmt.Sprintf("Missing required config parameter: %s.", configKey)))
+		tome.Check(fmt.Errorf("Missing required config parameter: %s.", configKey))
 	}
 }
