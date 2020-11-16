@@ -25,5 +25,5 @@ func NewCommand(timestamp int64, author string, tags []string, command string) C
 //String() is the string representation of a Command.
 func (c Command) String() string {
 	t := strings.Join(c.Tags, ":")
-	return fmt.Sprintf("%d;%s;%s;%s", c.Timestamp, c.Author, t, c.Command)
+	return fmt.Sprintf(": %d;%s;%s;%s", c.Timestamp, c.Author, t, c.Command)
 }
