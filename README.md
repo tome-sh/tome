@@ -7,7 +7,6 @@ Share shell spells.
 You'll need a config at ~/.tome.yaml looking like this:
 ```
 shellType: zsh
-historyFile: /Users/username/.zsh_history
 repository: /Users/username/code/tome-repo/commands
 ```
 
@@ -26,7 +25,7 @@ To run the code showing the help text:
 go run .
 ```
 
-To run `last` command:
+To run `write` command:
 ```
-go run . last
+go run . write 'echo "This is the command"'
 ```
