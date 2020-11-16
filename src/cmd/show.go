@@ -21,9 +21,14 @@ var showCmd = &cobra.Command{
 			tome.Check(err)
 		}
 
-		lines, err := repo.GetAll()
+		commands, err := repo.GetAll()
 		tome.Check(err)
 
+		var lines []string
+
+		for _, command := range commands {
+			lines = append(lines, command.String())
+		}
 		fmt.Printf("%s\n", strings.Join(lines, "\n"))
 	},
 }

@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -69,6 +69,6 @@ func initConfig() {
 
 func requireParam(configKey string) {
 	if !viper.IsSet(configKey) {
-		tome.Check(fmt.Errorf("Missing required config parameter: %s.", configKey))
+		tome.Check(fmt.Errorf("missing required config parameter: %s", configKey))
 	}
 }

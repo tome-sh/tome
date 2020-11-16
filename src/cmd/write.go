@@ -20,7 +20,7 @@ var writeCmd = &cobra.Command{
 		author, err := tome.GetUserName()
 		tome.Check(err)
 
-		command := tome.NewCommand(author, args[0], time.Now().Unix(), tags)
+		command := tome.NewCommand(time.Now().Unix(), author , tags, args[0])
 
 		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
 		err = repo.Store(command)
