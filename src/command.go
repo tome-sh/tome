@@ -140,5 +140,14 @@ func Deserialize(reader io.Reader) ([]Command, error) {
 	}
 
 	return items, nil
+}
 
+func FindById(commands []Command, id string) (Command, error) {
+	for _, c := range commands {
+		if c.Id.String() == id {
+			return c, nil
+		}
+	}
+
+	return Command{}, fmt.Errorf("command with id '%s' does not exist", id)
 }
