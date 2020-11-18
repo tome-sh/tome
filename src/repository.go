@@ -46,7 +46,7 @@ func (r FileRepository) Store(cmd Command) error {
 	}
 	defer f.Close()
 
-	if _, err = f.WriteString(fmt.Sprintf("%s\n", cmd)); err != nil {
+	if _, err = f.WriteString(fmt.Sprintf("%s\n", cmd.Serialize())); err != nil {
 		return err
 	}
 
@@ -62,7 +62,7 @@ func (r FileRepository) GetAll() ([]Command, error) {
 	}
 	defer f.Close()
 
-	return ParseCommands(f)
+	return Deserialize(f)
 }
 
 // Store the given cmd in the GitRepository.
