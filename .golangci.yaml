@@ -1,0 +1,12 @@
+linters:
+  enable:
+    - lll
+    - gofmt
+    - goimports
+    - unused
+
+linters-settings:
+  goimports:
+    local-prefixes: tome
+  lll:
+    line-length: 100
