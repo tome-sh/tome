@@ -36,7 +36,12 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.tome{.yaml|.json})")
+	rootCmd.PersistentFlags().StringVar(
+		&cfgFile,
+		"config",
+		"",
+		"config file (default is $HOME/.tome{.yaml|.json})",
+	)
 	rootCmd.PersistentFlags().BoolP("debug", "d", false, "set to true to see stack traces")
 	tome.Check(viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("debug")))
 }
@@ -60,7 +65,7 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		tome.Logger.Println("Using config file:", viper.ConfigFileUsed())
 	}
 
 	requireParam(tome.SHELL_TYPE_CONFIG_KEY)

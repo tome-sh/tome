@@ -1,7 +1,6 @@
 package tome
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/spf13/viper"
@@ -31,7 +30,7 @@ func Check(e error) {
 		if viper.GetBool("debug") {
 			panic(e)
 		} else {
-			fmt.Printf("Encountered error: %v\n", e)
+			Logger.Printf("Encountered error: %v\n", e)
 		}
 		os.Exit(1)
 	}

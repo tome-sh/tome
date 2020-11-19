@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"tome/src"
+	tome "tome/src"
 )
 
 var tags []string
@@ -20,7 +22,7 @@ var writeCmd = &cobra.Command{
 		author, err := tome.GetUserName()
 		tome.Check(err)
 
-		command := tome.NewCommand(time.Now().Unix(), author , tags, args[0])
+		command := tome.NewCommand(uuid.New(), time.Now(), author, tags, args[0])
 
 		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
 		err = repo.Store(command)

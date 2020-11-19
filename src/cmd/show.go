@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"tome/src"
+	tome "tome/src"
 )
 
 // lastCmd represents the last command

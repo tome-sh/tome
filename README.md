@@ -29,3 +29,16 @@ To run `write` command:
 ```
 go run . write 'echo "This is the command"'
 ```
+
+## Install
+
+- Install to your local go path with `go install .`
+- Add the local go path to your `.zshrc`: 
+```bash
+export PATH="$HOME/go/bin:$PATH"
+```
+- Source the key-bindings:
+```
+source shell/key-bindings.zsh
+```
+ 
