@@ -48,13 +48,14 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	// Find home directory.
+	home, err := homedir.Dir()
+	tome.Check(err)
+
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-		// Find home directory.
-		home, err := homedir.Dir()
-		tome.Check(err)
 
 		// Search config in home directory with name ".tome" (without extension).
 		viper.AddConfigPath(home)
@@ -64,8 +65,8 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		tome.Logger.Println("Using config file:", viper.ConfigFileUsed())
+	if err := viper.ReadInConfig(); err != nil {
+		tome.Logger.Println("no suitable config file found in: ", home)
 	}
 
 	requireParam(tome.SHELL_TYPE_CONFIG_KEY)
