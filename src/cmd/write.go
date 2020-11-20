@@ -22,6 +22,9 @@ var writeCmd = &cobra.Command{
 		author, err := tome.GetUserName()
 		tome.Check(err)
 
+		if len(args[0]) <= 0 {
+			tome.Check(fmt.Errorf("cannot add empty command"))
+		}
 		command := tome.NewCommand(uuid.New(), time.Now(), author, tags, args[0])
 
 		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
