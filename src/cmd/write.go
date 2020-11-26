@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"time"
 
 	"github.com/google/uuid"
@@ -22,10 +24,13 @@ var writeCmd = &cobra.Command{
 		author, err := tome.GetUserName()
 		tome.Check(err)
 
-		if len(args[0]) <= 0 {
+		text, err := ioutil.ReadAll(os.Stdin)
+		tome.Check(err)
+
+		if len(text) <= 0 {
 			tome.Check(fmt.Errorf("cannot add empty command"))
 		}
-		command := tome.NewCommand(uuid.New(), time.Now(), author, tags, args[0])
+		command := tome.NewCommand(uuid.New(), time.Now(), author, tags, string(text))
 
 		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
 		err = repo.Store(command)
