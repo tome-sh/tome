@@ -10,6 +10,6 @@
     zle reset-prompt
     return $ret
   }
-  zle     -N     tome-show-widget
-  bindkey '^R^R' tome-show-widget
+  zle     -N    tome-show-widget
+  bindkey '^Tr' tome-show-widget
 }
