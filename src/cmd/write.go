@@ -35,8 +35,6 @@ var writeCmd = &cobra.Command{
 		repo := tome.NewGitRepository(viper.GetString(tome.REPOSITORY_CONFIG_KEY))
 		err = repo.Store(command)
 		tome.Check(err)
-
-		fmt.Printf("Stored command: %s\n", command.String())
 	},
 }
 
