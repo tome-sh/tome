@@ -131,7 +131,11 @@ func Deserialize(reader io.Reader) ([]Command, error) {
 			}
 		case Cmd:
 			command = strings.TrimRight(text, "\n")
-			items = append(items, NewCommand(id, time.Unix(timestamp, 0), author, tags, command))
+			if len(command) <= 0 {
+				lastError = fmt.Errorf("command with id '%s' is empty", id)
+			} else {
+				items = append(items, NewCommand(id, time.Unix(timestamp, 0), author, tags, command))
+			}
 		}
 
 		if lastError != nil {

@@ -55,6 +55,15 @@ func (r FileRepository) Store(cmd Command) error {
 
 // Get all commands from the repository.
 func (r FileRepository) GetAll() ([]Command, error) {
+	info, err := os.Stat(r.path)
+	if err != nil {
+		return []Command{}, err
+	}
+
+	if info.Size() <= 1 {
+		return []Command{}, fmt.Errorf("file repository '%s' is empty", r.path)
+	}
+
 	f, err := os.Open(r.path)
 
 	if err != nil {
